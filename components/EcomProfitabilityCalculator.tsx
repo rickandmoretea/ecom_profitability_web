@@ -195,7 +195,7 @@ const EcomProfitabilityCalculator = () => {
                 increasePriceForMargin: t.increasePriceForMargin
               }}
             />
-            <PlatformComparisonCards results={results} />
+            <PlatformComparisonCards results={results} language={language} />
             <DetailedBreakdownTable results={results} language={language} />
             <KeyInsights 
               results={results} 

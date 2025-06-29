@@ -1,8 +1,9 @@
- 'use client'
+'use client'
 
 import React from 'react';
 import { CalculationResult } from './types';
 import { platformFees } from './constants';
+import { useTranslation } from './i18n';
 
 interface PlatformComparisonCardsProps {
   results: {
@@ -10,9 +11,12 @@ interface PlatformComparisonCardsProps {
     lazada: CalculationResult;
     tiktok: CalculationResult;
   };
+  language: 'th' | 'en';
 }
 
-const PlatformComparisonCards: React.FC<PlatformComparisonCardsProps> = ({ results }) => {
+const PlatformComparisonCards: React.FC<PlatformComparisonCardsProps> = ({ results, language }) => {
+  const t = useTranslation(language);
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
       {Object.entries(results).map(([platform, result]) => (
@@ -24,21 +28,21 @@ const PlatformComparisonCards: React.FC<PlatformComparisonCardsProps> = ({ resul
           
           <div className="space-y-3">
             <div className="bg-green-50 rounded-lg p-3">
-              <p className="text-sm text-green-600 font-medium">Gross Profit</p>
+              <p className="text-sm text-green-600 font-medium">{t.grossProfit}</p>
               <p className="text-xl font-bold text-green-700">
                 ฿{result.grossProfit.toLocaleString()}
               </p>
             </div>
             
             <div className="bg-blue-50 rounded-lg p-3">
-              <p className="text-sm text-blue-600 font-medium">Profit Margin</p>
+              <p className="text-sm text-blue-600 font-medium">{t.profitMargin}</p>
               <p className="text-xl font-bold text-blue-700">
                 {result.profitMargin.toFixed(1)}%
               </p>
             </div>
             
             <div className="bg-red-50 rounded-lg p-3">
-              <p className="text-sm text-red-600 font-medium">Total Fee Rate</p>
+              <p className="text-sm text-red-600 font-medium">{t.totalFeeRate}</p>
               <p className="text-lg font-bold text-red-700">
                 {result.totalFeeRate.toFixed(2)}%
               </p>
