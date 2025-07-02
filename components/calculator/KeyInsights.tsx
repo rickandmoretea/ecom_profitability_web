@@ -21,6 +21,9 @@ interface KeyInsightsProps {
     shopeeAdvantage: string;
     lazadaAdvantage: string;
     tiktokAdvantage: string;
+    programs: string;
+    maximumTotalCostsLabel: string;
+    platformAdvantages: string;
   };
 }
 
@@ -35,16 +38,43 @@ const KeyInsights: React.FC<KeyInsightsProps> = ({ results, t }) => {
         <Info className="w-5 h-5 text-blue-600" />
         <h3 className="font-semibold text-blue-800">{t.keyInsights}</h3>
       </div>
-      <div className="text-sm text-blue-700 space-y-2">
-        <p>• <strong>{t.baseCosts}</strong></p>
-        <p>• <strong>{t.shopeePrograms}</strong></p>
-        <p>• <strong>{t.lazadaPrograms}</strong></p>
-        <p>• <strong>{t.tiktokPrograms}</strong></p>
-        <p>• <strong>{t.mallVsNonMall}</strong></p>
-        <p>• <strong>{t.maximumTotalCosts}</strong></p>
-        {bestPlatform.platform === 'shopee' && <p>• <strong>{t.shopeeAdvantage}</strong></p>}
-        {bestPlatform.platform === 'lazada' && <p>• <strong>{t.lazadaAdvantage}</strong></p>}
-        {bestPlatform.platform === 'tiktok' && <p>• <strong>{t.tiktokAdvantage}</strong></p>}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-blue-700 border-collapse">
+          <thead>
+            <tr>
+              <th className="text-left py-2 px-2 font-semibold">&nbsp;</th>
+              <th className="text-center py-2 px-2 font-semibold">Shopee</th>
+              <th className="text-center py-2 px-2 font-semibold">Lazada</th>
+              <th className="text-center py-2 px-2 font-semibold">TikTok</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t">
+              <td className="py-2 px-2 font-medium">{t.baseCosts.split(':')[0]}</td>
+              <td className="text-center" colSpan={3}>{t.baseCosts.split(':')[1]}</td>
+            </tr>
+            <tr className="border-t">
+              <td className="py-2 px-2 font-medium">{t.programs}</td>
+              <td className="text-center">{t.shopeePrograms}</td>
+              <td className="text-center">{t.lazadaPrograms}</td>
+              <td className="text-center">{t.tiktokPrograms}</td>
+            </tr>
+            <tr className="border-t">
+              <td className="py-2 px-2 font-medium">Mall vs Non-Mall</td>
+              <td className="text-center" colSpan={3}>{t.mallVsNonMall}</td>
+            </tr>
+            <tr className="border-t">
+              <td className="py-2 px-2 font-medium">{t.maximumTotalCostsLabel}</td>
+              <td className="text-center" colSpan={3}>{t.maximumTotalCosts.split(':')[1]}</td>
+            </tr>
+            <tr className="border-t">
+              <td className="py-2 px-2 font-medium">{t.platformAdvantages}</td>
+              <td className={`text-center${bestPlatform.platform === 'shopee' ? ' font-bold bg-green-100' : ''}`}>{t.shopeeAdvantage}</td>
+              <td className={`text-center${bestPlatform.platform === 'lazada' ? ' font-bold bg-green-100' : ''}`}>{t.lazadaAdvantage}</td>
+              <td className={`text-center${bestPlatform.platform === 'tiktok' ? ' font-bold bg-green-100' : ''}`}>{t.tiktokAdvantage}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

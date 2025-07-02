@@ -32,6 +32,8 @@ export interface Translations {
   targetMarginPlaceholder: string;
   returnsRateHelp: string;
   targetMarginHelp: string;
+  vat: string;
+  customCommission: string;
   
   // Advanced options
   advancedOptions: string;
@@ -120,6 +122,11 @@ export interface Translations {
   language: string;
   thai: string;
   english: string;
+  
+  // Key insights table labels
+  programs: string;
+  maximumTotalCostsLabel: string;
+  platformAdvantages: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -155,6 +162,8 @@ export const translations: Record<Language, Translations> = {
     targetMarginPlaceholder: 'เป้าหมายกำไรที่ต้องการ',
     returnsRateHelp: 'เปอร์เซ็นต์ของสินค้าที่จะถูกคืน',
     targetMarginHelp: 'ใช้สำหรับคำนวณราคาขายที่แนะนำ',
+    vat: 'VAT (%)',
+    customCommission: 'ค่านายหน้าเพิ่มเติม (%)',
     
     // Advanced options
     advancedOptions: 'ตัวเลือกขั้นสูง',
@@ -242,7 +251,12 @@ export const translations: Record<Language, Translations> = {
     // Language switcher
     language: 'ภาษา',
     thai: 'ไทย',
-    english: 'English'
+    english: 'English',
+    
+    // Key insights table labels
+    programs: 'โปรแกรม',
+    maximumTotalCostsLabel: 'ค่าใช้จ่ายรวมสูงสุด',
+    platformAdvantages: 'ข้อดีแต่ละแพลตฟอร์ม'
   },
   en: {
     // Main calculator
@@ -276,6 +290,8 @@ export const translations: Record<Language, Translations> = {
     targetMarginPlaceholder: 'Your target profit margin',
     returnsRateHelp: 'Percentage of items that get returned',
     targetMarginHelp: 'Used to calculate recommended selling price',
+    vat: 'VAT (%)',
+    customCommission: 'Custom Commission (%)',
     
     // Advanced options
     advancedOptions: 'Advanced Options',
@@ -363,7 +379,12 @@ export const translations: Record<Language, Translations> = {
     // Language switcher
     language: 'Language',
     thai: 'ไทย',
-    english: 'English'
+    english: 'English',
+    
+    // Key insights table labels
+    programs: 'Programs',
+    maximumTotalCostsLabel: 'Maximum Total Costs',
+    platformAdvantages: 'Platform Advantages'
   }
 };
 

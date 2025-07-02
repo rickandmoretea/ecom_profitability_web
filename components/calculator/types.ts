@@ -9,6 +9,8 @@ export interface Breakdown {
     shippingCost?: number;
     marketingCost?: number;
     otherCosts?: number;
+    vat?: number;
+    customCommission?: number;
   }
   
   export interface CalculationResult {
@@ -48,6 +50,8 @@ export interface Breakdown {
     packagingCost: number;
     returnsRate: number;
     targetProfitMargin: number;
+    vatPercent: number;
+    customCommissionPercent: number;
   }
   
   export interface VolumeDiscounts {

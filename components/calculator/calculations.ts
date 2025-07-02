@@ -22,7 +22,9 @@ export const calculateShopeeFees = (
     freeShippingAndCoupon: 0,
     shippingCost: businessExpenses.shippingCost,
     marketingCost: businessExpenses.marketingCost,
-    otherCosts: businessExpenses.packagingCost
+    otherCosts: businessExpenses.packagingCost,
+    vat: (productPrice * (businessExpenses.vatPercent || 0) / 100),
+    customCommission: (productPrice * (businessExpenses.customCommissionPercent || 0) / 100)
   };
   
   // Only one program can be active at a time
@@ -58,11 +60,11 @@ export const calculateShopeeFees = (
     totalFeeRate,
     totalFees,
     breakdown,
-    netRevenue: productPrice - totalFees,
+    netRevenue: productPrice - totalFees - (breakdown.vat || 0) - (breakdown.customCommission || 0),
     grossProfit: productPrice - totalFees - productCost - businessExpenses.shippingCost - 
-      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost,
+      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost - (breakdown.vat || 0) - (breakdown.customCommission || 0),
     profitMargin: ((productPrice - totalFees - productCost - businessExpenses.shippingCost - 
-      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost) / productPrice) * 100,
+      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost - (breakdown.vat || 0) - (breakdown.customCommission || 0)) / productPrice) * 100,
     breakEvenPrice,
     targetPriceForMargin
   };
@@ -86,7 +88,9 @@ export const calculateLazadaFees = (
     couponProgram: 0,
     shippingCost: businessExpenses.shippingCost,
     marketingCost: businessExpenses.marketingCost,
-    otherCosts: businessExpenses.packagingCost
+    otherCosts: businessExpenses.packagingCost,
+    vat: (productPrice * (businessExpenses.vatPercent || 0) / 100),
+    customCommission: (productPrice * (businessExpenses.customCommissionPercent || 0) / 100)
   };
   
   if (lazadaOptions.useProgram) {
@@ -118,11 +122,11 @@ export const calculateLazadaFees = (
     totalFeeRate,
     totalFees,
     breakdown,
-    netRevenue: productPrice - totalFees,
+    netRevenue: productPrice - totalFees - (breakdown.vat || 0) - (breakdown.customCommission || 0),
     grossProfit: productPrice - totalFees - productCost - businessExpenses.shippingCost - 
-      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost,
+      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost - (breakdown.vat || 0) - (breakdown.customCommission || 0),
     profitMargin: ((productPrice - totalFees - productCost - businessExpenses.shippingCost - 
-      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost) / productPrice) * 100,
+      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost - (breakdown.vat || 0) - (breakdown.customCommission || 0)) / productPrice) * 100,
     breakEvenPrice,
     targetPriceForMargin
   };
@@ -159,7 +163,9 @@ export const calculateTikTokFees = (
     flashSaleAndBrands: 0,
     shippingCost: businessExpenses.shippingCost,
     marketingCost: businessExpenses.marketingCost,
-    otherCosts: businessExpenses.packagingCost
+    otherCosts: businessExpenses.packagingCost,
+    vat: (productPrice * (businessExpenses.vatPercent || 0) / 100),
+    customCommission: (productPrice * (businessExpenses.customCommissionPercent || 0) / 100)
   };
   
   if (tiktokOptions.useProgram) {
@@ -198,11 +204,11 @@ export const calculateTikTokFees = (
     totalFeeRate,
     totalFees,
     breakdown,
-    netRevenue: productPrice - totalFees,
+    netRevenue: productPrice - totalFees - (breakdown.vat || 0) - (breakdown.customCommission || 0),
     grossProfit: productPrice - totalFees - productCost - businessExpenses.shippingCost - 
-      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost,
+      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost - (breakdown.vat || 0) - (breakdown.customCommission || 0),
     profitMargin: ((productPrice - totalFees - productCost - businessExpenses.shippingCost - 
-      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost) / productPrice) * 100,
+      businessExpenses.marketingCost - businessExpenses.packagingCost - returnsCost - (breakdown.vat || 0) - (breakdown.customCommission || 0)) / productPrice) * 100,
     breakEvenPrice,
     targetPriceForMargin
   };

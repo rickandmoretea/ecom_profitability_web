@@ -180,6 +180,23 @@ const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results
                 </td>
               ))}
             </tr>
+
+            <tr>
+              <td className="py-2 px-2 pl-6 text-gray-600">{t.vat}</td>
+              {platforms.map((platform) => (
+                <td key={platform.name} className="py-2 px-2 text-center">
+                  ฿{(platform.data.breakdown.vat || 0).toFixed(0)}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <td className="py-2 px-2 pl-6 text-gray-600">{t.customCommission}</td>
+              {platforms.map((platform) => (
+                <td key={platform.name} className="py-2 px-2 text-center">
+                  ฿{(platform.data.breakdown.customCommission || 0).toFixed(0)}
+                </td>
+              ))}
+            </tr>
           </tbody>
         </table>
       </div>

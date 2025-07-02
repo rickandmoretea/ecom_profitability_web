@@ -37,7 +37,9 @@ const EcomProfitabilityCalculator = () => {
     marketingCost: 30,
     packagingCost: 20,
     returnsRate: 2,
-    targetProfitMargin: 25
+    targetProfitMargin: 25,
+    vatPercent: 7,
+    customCommissionPercent: 0
   });
   
   // Advanced options
@@ -160,7 +162,7 @@ const EcomProfitabilityCalculator = () => {
 
           {/* Results Section */}
           <div className="lg:col-span-3">
-            <BestPlatformHighlight results={results} />
+            <BestPlatformHighlight results={results} language={language} />
             <BusinessIntelligence 
               results={results}
               businessExpenses={businessExpenses}
@@ -198,7 +200,7 @@ const EcomProfitabilityCalculator = () => {
             <PlatformComparisonCards results={results} language={language} />
             <DetailedBreakdownTable results={results} language={language} />
             <KeyInsights 
-              results={results} 
+              results={results}
               t={{
                 keyInsights: t.keyInsights,
                 baseCosts: t.baseCosts,
@@ -209,7 +211,10 @@ const EcomProfitabilityCalculator = () => {
                 maximumTotalCosts: t.maximumTotalCosts,
                 shopeeAdvantage: t.shopeeAdvantage,
                 lazadaAdvantage: t.lazadaAdvantage,
-                tiktokAdvantage: t.tiktokAdvantage
+                tiktokAdvantage: t.tiktokAdvantage,
+                programs: t.programs,
+                maximumTotalCostsLabel: t.maximumTotalCostsLabel,
+                platformAdvantages: t.platformAdvantages
               }}
             />
           </div>

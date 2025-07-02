@@ -112,6 +112,37 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
           />
           <p className="text-xs text-gray-500 mt-1">{t.targetMarginHelp}</p>
         </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            VAT (%)
+          </label>
+          <input
+            type="number"
+            value={expenses.vatPercent ?? 7}
+            onChange={(e) => onExpensesChange({...expenses, vatPercent: Number(e.target.value)})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            min="0"
+            max="100"
+            step="0.1"
+            placeholder="7"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            ค่านายหน้าเพิ่มเติม (%)
+          </label>
+          <input
+            type="number"
+            value={expenses.customCommissionPercent ?? 0}
+            onChange={(e) => onExpensesChange({...expenses, customCommissionPercent: Number(e.target.value)})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            min="0"
+            max="100"
+            step="0.1"
+            placeholder="0"
+          />
+        </div>
       </div>
     </div>
   );

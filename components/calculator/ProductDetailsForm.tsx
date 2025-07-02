@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Package, Tag, DollarSign } from 'lucide-react';
 
 interface ProductDetailsFormProps {
@@ -34,6 +34,30 @@ const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
   onCategoryChange,
   t
 }) => {
+  const [priceInput, setPriceInput] = useState(productPrice.toString());
+  const [costInput, setCostInput] = useState(productCost.toString());
+
+  useEffect(() => {
+    setPriceInput(productPrice.toString());
+  }, [productPrice]);
+  useEffect(() => {
+    setCostInput(productCost.toString());
+  }, [productCost]);
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/^0+(?!$)/, ''); // Remove leading zeros
+    if (!/^[0-9]*$/.test(value)) return; // Only allow digits
+    setPriceInput(value);
+    onProductPriceChange(value === '' ? 0 : Number(value));
+  };
+
+  const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/^0+(?!$)/, '');
+    if (!/^[0-9]*$/.test(value)) return;
+    setCostInput(value);
+    onProductCostChange(value === '' ? 0 : Number(value));
+  };
+
   const categories = [
     { value: 'electronics', label: t.categories.electronics },
     { value: 'fashion', label: t.categories.fashion },
@@ -57,12 +81,15 @@ const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           <div className="relative">
             <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
-              type="number"
-              value={productPrice}
-              onChange={(e) => onProductPriceChange(Number(e.target.value))}
+              type="text"
+              inputMode="decimal"
+              pattern="[0-9]*"
+              value={priceInput}
+              onChange={handlePriceChange}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               min="0"
               placeholder="0"
+              autoComplete="off"
             />
           </div>
         </div>
@@ -74,12 +101,15 @@ const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           <div className="relative">
             <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
-              type="number"
-              value={productCost}
-              onChange={(e) => onProductCostChange(Number(e.target.value))}
+              type="text"
+              inputMode="decimal"
+              pattern="[0-9]*"
+              value={costInput}
+              onChange={handleCostChange}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               min="0"
               placeholder="0"
+              autoComplete="off"
             />
           </div>
         </div>
