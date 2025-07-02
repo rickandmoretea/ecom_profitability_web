@@ -30,6 +30,7 @@ const EcomProfitabilityCalculator = () => {
   const [productCost, setProductCost] = useState(500);
   const [selectedCategory, setSelectedCategory] = useState('electronics');
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [orderQuantity, setOrderQuantity] = useState(1);
   
   // Business expenses
   const [businessExpenses, setBusinessExpenses] = useState<BusinessExpenses>({
@@ -103,8 +104,12 @@ const EcomProfitabilityCalculator = () => {
                 sellingPrice: t.sellingPrice,
                 productCost: t.productCost,
                 category: t.category,
-                categories: t.categories
+                categories: t.categories,
+                orderQuantity: t.orderQuantity
               }}
+              orderQuantity={orderQuantity}
+              onOrderQuantityChange={setOrderQuantity}
+              lang={language}
             />
 
             <BusinessExpensesForm
@@ -123,7 +128,8 @@ const EcomProfitabilityCalculator = () => {
                 returnsRatePlaceholder: t.returnsRatePlaceholder,
                 targetMarginPlaceholder: t.targetMarginPlaceholder,
                 returnsRateHelp: t.returnsRateHelp,
-                targetMarginHelp: t.targetMarginHelp
+                targetMarginHelp: t.targetMarginHelp,
+                customCommission: t.customCommission
               }}
             />
 
@@ -162,12 +168,14 @@ const EcomProfitabilityCalculator = () => {
 
           {/* Results Section */}
           <div className="lg:col-span-3">
-            <BestPlatformHighlight results={results} language={language} />
+            <BestPlatformHighlight results={results} language={language} orderQuantity={orderQuantity} />
             <BusinessIntelligence 
               results={results}
               businessExpenses={businessExpenses}
               productPrice={productPrice}
               productCost={productCost}
+              orderQuantity={orderQuantity}
+              language={language}
               t={{
                 businessIntelligence: t.businessIntelligence,
                 breakEvenAnalysis: t.breakEvenAnalysis,
@@ -194,11 +202,13 @@ const EcomProfitabilityCalculator = () => {
                 focusOnPlatform: t.focusOnPlatform,
                 improveProductQuality: t.improveProductQuality,
                 reviewMarketingCosts: t.reviewMarketingCosts,
-                increasePriceForMargin: t.increasePriceForMargin
+                increasePriceForMargin: t.increasePriceForMargin,
+                netRevenue: t.netRevenue,
+                grossProfit: t.grossProfit
               }}
             />
-            <PlatformComparisonCards results={results} language={language} />
-            <DetailedBreakdownTable results={results} language={language} />
+            <PlatformComparisonCards results={results} language={language} orderQuantity={orderQuantity} />
+            <DetailedBreakdownTable results={results} language={language} orderQuantity={orderQuantity} />
             <KeyInsights 
               results={results}
               t={{

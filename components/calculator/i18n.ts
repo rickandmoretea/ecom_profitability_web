@@ -10,6 +10,7 @@ export interface Translations {
   sellingPrice: string;
   productCost: string;
   category: string;
+  orderQuantity: string;
   categories: {
     electronics: string;
     fashion: string;
@@ -140,6 +141,7 @@ export const translations: Record<Language, Translations> = {
     sellingPrice: 'ราคาขาย (บาท)',
     productCost: 'ต้นทุนสินค้า (บาท)',
     category: 'หมวดหมู่สินค้า',
+    orderQuantity: 'จำนวนออเดอร์',
     categories: {
       electronics: 'อิเล็กทรอนิกส์',
       fashion: 'แฟชั่น',
@@ -268,6 +270,7 @@ export const translations: Record<Language, Translations> = {
     sellingPrice: 'Selling Price (THB)',
     productCost: 'Product Cost (THB)',
     category: 'Product Category',
+    orderQuantity: 'Order Quantity',
     categories: {
       electronics: 'Electronics',
       fashion: 'Fashion',

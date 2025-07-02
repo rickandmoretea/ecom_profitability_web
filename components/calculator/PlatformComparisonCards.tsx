@@ -12,9 +12,10 @@ interface PlatformComparisonCardsProps {
     tiktok: CalculationResult;
   };
   language: 'th' | 'en';
+  orderQuantity: number;
 }
 
-const PlatformComparisonCards: React.FC<PlatformComparisonCardsProps> = ({ results, language }) => {
+const PlatformComparisonCards: React.FC<PlatformComparisonCardsProps> = ({ results, language, orderQuantity }) => {
   const t = useTranslation(language);
   
   return (
@@ -32,6 +33,9 @@ const PlatformComparisonCards: React.FC<PlatformComparisonCardsProps> = ({ resul
               <p className="text-xl font-bold text-green-700">
                 ฿{result.grossProfit.toLocaleString()}
               </p>
+              {orderQuantity > 1 && (
+                <p className="text-xs text-green-700 mt-1">{language === 'th' ? 'กำไรรวม' : 'Total'}: <span className="font-bold">฿{(result.grossProfit * orderQuantity).toLocaleString()}</span></p>
+              )}
             </div>
             
             <div className="bg-blue-50 rounded-lg p-3">
@@ -39,6 +43,9 @@ const PlatformComparisonCards: React.FC<PlatformComparisonCardsProps> = ({ resul
               <p className="text-xl font-bold text-blue-700">
                 {result.profitMargin.toFixed(1)}%
               </p>
+              {orderQuantity > 1 && (
+                <p className="text-xs text-blue-700 mt-1">{language === 'th' ? 'ออเดอร์รวม' : 'Total orders'}: <span className="font-bold">{orderQuantity}</span></p>
+              )}
             </div>
             
             <div className="bg-red-50 rounded-lg p-3">

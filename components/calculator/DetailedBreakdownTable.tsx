@@ -11,9 +11,10 @@ interface DetailedBreakdownTableProps {
     tiktok: { breakdown: Breakdown; totalFees: number; profitMargin: number };
   };
   language: 'th' | 'en';
+  orderQuantity: number;
 }
 
-const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results, language }) => {
+const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results, language, orderQuantity }) => {
   const t = useTranslation(language);
   
   const platforms = [
@@ -140,6 +141,9 @@ const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results
               {platforms.map((platform) => (
                 <td key={platform.name} className="py-2 px-2 text-center">
                   ฿{(platform.data.breakdown.shippingCost || 0).toFixed(0)}
+                  {orderQuantity > 1 && (
+                    <span className="block text-xs text-gray-500">{language === 'th' ? 'รวม' : 'Total'}: ฿{((platform.data.breakdown.shippingCost || 0) * orderQuantity).toLocaleString()}</span>
+                  )}
                 </td>
               ))}
             </tr>
@@ -149,6 +153,9 @@ const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results
               {platforms.map((platform) => (
                 <td key={platform.name} className="py-2 px-2 text-center">
                   ฿{(platform.data.breakdown.marketingCost || 0).toFixed(0)}
+                  {orderQuantity > 1 && (
+                    <span className="block text-xs text-gray-500">{language === 'th' ? 'รวม' : 'Total'}: ฿{((platform.data.breakdown.marketingCost || 0) * orderQuantity).toLocaleString()}</span>
+                  )}
                 </td>
               ))}
             </tr>
@@ -158,6 +165,9 @@ const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results
               {platforms.map((platform) => (
                 <td key={platform.name} className="py-2 px-2 text-center">
                   ฿{(platform.data.breakdown.otherCosts || 0).toFixed(0)}
+                  {orderQuantity > 1 && (
+                    <span className="block text-xs text-gray-500">{language === 'th' ? 'รวม' : 'Total'}: ฿{((platform.data.breakdown.otherCosts || 0) * orderQuantity).toLocaleString()}</span>
+                  )}
                 </td>
               ))}
             </tr>
@@ -186,6 +196,9 @@ const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results
               {platforms.map((platform) => (
                 <td key={platform.name} className="py-2 px-2 text-center">
                   ฿{(platform.data.breakdown.vat || 0).toFixed(0)}
+                  {orderQuantity > 1 && (
+                    <span className="block text-xs text-gray-500">{language === 'th' ? 'รวม' : 'Total'}: ฿{((platform.data.breakdown.vat || 0) * orderQuantity).toLocaleString()}</span>
+                  )}
                 </td>
               ))}
             </tr>
@@ -194,6 +207,9 @@ const DetailedBreakdownTable: React.FC<DetailedBreakdownTableProps> = ({ results
               {platforms.map((platform) => (
                 <td key={platform.name} className="py-2 px-2 text-center">
                   ฿{(platform.data.breakdown.customCommission || 0).toFixed(0)}
+                  {orderQuantity > 1 && (
+                    <span className="block text-xs text-gray-500">{language === 'th' ? 'รวม' : 'Total'}: ฿{((platform.data.breakdown.customCommission || 0) * orderQuantity).toLocaleString()}</span>
+                  )}
                 </td>
               ))}
             </tr>

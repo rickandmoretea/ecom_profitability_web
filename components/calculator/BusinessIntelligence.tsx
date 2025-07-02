@@ -13,6 +13,8 @@ interface BusinessIntelligenceProps {
   businessExpenses: BusinessExpenses;
   productPrice: number;
   productCost: number;
+  orderQuantity: number;
+  language: 'th' | 'en';
   t: {
     businessIntelligence: string;
     breakEvenAnalysis: string;
@@ -40,6 +42,8 @@ interface BusinessIntelligenceProps {
     improveProductQuality: string;
     reviewMarketingCosts: string;
     increasePriceForMargin: string;
+    netRevenue: string;
+    grossProfit: string;
   };
 }
 
@@ -48,6 +52,8 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
   businessExpenses,
   productPrice,
   productCost,
+  orderQuantity,
+  language,
   t
 }) => {
   const bestPlatform = Object.entries(results).reduce((best, [platform, result]) => 
@@ -64,16 +70,18 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
     result.profitMargin >= businessExpenses.targetProfitMargin
   );
 
+  const bestResult = results[bestPlatform.platform as keyof typeof results];
+
   return (
-    <div className="bg-white rounded-xl border-2 border-gray-200 p-6 mb-6">
+    <div className="bg-white rounded-xl border-2 border-gray-200 p-4 md:p-6 mb-6 overflow-x-auto">
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
         <TrendingUp className="w-5 h-5" />
         {t.businessIntelligence}
       </h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Break-even Analysis */}
-        <div className="bg-blue-50 rounded-lg p-4">
+        <div className="bg-blue-50 rounded-lg p-4 w-full max-w-screen-sm mx-auto">
           <div className="flex items-center gap-2 mb-3">
             <Calculator className="w-5 h-5 text-blue-600" />
             <h3 className="font-semibold text-blue-800">{t.breakEvenAnalysis}</h3>
@@ -90,7 +98,7 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
         </div>
 
         {/* Target Margin Analysis */}
-        <div className="bg-green-50 rounded-lg p-4">
+        <div className="bg-green-50 rounded-lg p-4 w-full max-w-screen-sm mx-auto">
           <div className="flex items-center gap-2 mb-3">
             <Target className="w-5 h-5 text-green-600" />
             <h3 className="font-semibold text-green-800">{t.targetPrice}</h3>
@@ -107,7 +115,7 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
         </div>
 
         {/* Profitability Alert */}
-        <div className={`rounded-lg p-4 ${isProfitable ? 'bg-green-50' : 'bg-red-50'}`}>
+        <div className={`rounded-lg p-4 w-full max-w-screen-sm mx-auto ${isProfitable ? 'bg-green-50' : 'bg-red-50'}`}>
           <div className="flex items-center gap-2 mb-3">
             <AlertCircle className={`w-5 h-5 ${isProfitable ? 'text-green-600' : 'text-red-600'}`} />
             <h3 className={`font-semibold ${isProfitable ? 'text-green-800' : 'text-red-800'}`}>
@@ -134,7 +142,7 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
         </div>
 
         {/* Platform Comparison */}
-        <div className="bg-purple-50 rounded-lg p-4">
+        <div className="bg-purple-50 rounded-lg p-4 w-full max-w-screen-sm mx-auto">
           <div className="flex items-center gap-2 mb-3">
             <DollarSign className="w-5 h-5 text-purple-600" />
             <h3 className="font-semibold text-purple-800">{t.platformDifference}</h3>
@@ -151,7 +159,7 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
         </div>
 
         {/* Cost Breakdown */}
-        <div className="bg-orange-50 rounded-lg p-4">
+        <div className="bg-orange-50 rounded-lg p-4 w-full max-w-screen-sm mx-auto">
           <div className="flex items-center gap-2 mb-3">
             <Calculator className="w-5 h-5 text-orange-600" />
             <h3 className="font-semibold text-orange-800">{t.totalCosts}</h3>
@@ -166,7 +174,7 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
         </div>
 
         {/* Recommendations */}
-        <div className="bg-indigo-50 rounded-lg p-4">
+        <div className="bg-indigo-50 rounded-lg p-4 w-full max-w-screen-sm mx-auto">
           <div className="flex items-center gap-2 mb-3">
             <Target className="w-5 h-5 text-indigo-600" />
             <h3 className="font-semibold text-indigo-800">{t.recommendations}</h3>
@@ -187,6 +195,25 @@ const BusinessIntelligence: React.FC<BusinessIntelligenceProps> = ({
             {!isAtTargetMargin && (
               <p>{t.increasePriceForMargin}</p>
             )}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        {/* Per-order summary */}
+        <div className="bg-green-50 rounded-xl p-6 w-full max-w-screen-sm mx-auto">
+          <h3 className="font-semibold text-green-800 mb-2">{t.profitabilityStatus}</h3>
+          <div className="text-green-700 text-lg">
+            <div>{t.netRevenue}: <span className="font-bold">฿{bestResult.netRevenue.toLocaleString()}</span></div>
+            <div>{t.grossProfit}: <span className="font-bold">฿{bestResult.grossProfit.toLocaleString()}</span></div>
+          </div>
+        </div>
+        {/* Total summary */}
+        <div className="bg-blue-50 rounded-xl p-6 w-full max-w-screen-sm mx-auto">
+          <h3 className="font-semibold text-blue-800 mb-2">{orderQuantity > 1 ? (t.profitabilityStatus + (language === 'th' ? ' (รวม)' : ' (Total)')) : t.profitabilityStatus}</h3>
+          <div className="text-blue-700 text-lg">
+            <div>{t.netRevenue}: <span className="font-bold">฿{(bestResult.netRevenue * orderQuantity).toLocaleString()}</span></div>
+            <div>{t.grossProfit}: <span className="font-bold">฿{(bestResult.grossProfit * orderQuantity).toLocaleString()}</span></div>
           </div>
         </div>
       </div>

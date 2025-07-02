@@ -21,6 +21,7 @@ interface BusinessExpensesFormProps {
     targetMarginPlaceholder: string;
     returnsRateHelp: string;
     targetMarginHelp: string;
+    customCommission: string;
   };
 }
 
@@ -29,6 +30,12 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
   onExpensesChange,
   t
 }) => {
+  const handleNumberInput = (field: keyof BusinessExpenses) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/^0+(?!$)/, ''); // Remove leading zeros
+    if (!/^\d*(\.\d*)?$/.test(value)) return; // Only allow numbers and decimals
+    onExpensesChange({ ...expenses, [field]: value === '' ? 0 : Number(value) });
+  };
+
   return (
     <div className="bg-gray-50 rounded-xl p-6">
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -42,12 +49,13 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
             {t.shippingCost}
           </label>
           <input
-            type="number"
-            value={expenses.shippingCost}
-            onChange={(e) => onExpensesChange({...expenses, shippingCost: Number(e.target.value)})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min="0"
-            placeholder={t.shippingCostPlaceholder}
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={expenses.shippingCost === 0 ? '' : expenses.shippingCost}
+            onChange={handleNumberInput('shippingCost')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
+            placeholder="0"
           />
         </div>
 
@@ -56,12 +64,13 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
             {t.marketingCost}
           </label>
           <input
-            type="number"
-            value={expenses.marketingCost}
-            onChange={(e) => onExpensesChange({...expenses, marketingCost: Number(e.target.value)})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min="0"
-            placeholder={t.marketingCostPlaceholder}
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={expenses.marketingCost === 0 ? '' : expenses.marketingCost}
+            onChange={handleNumberInput('marketingCost')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
+            placeholder="0"
           />
         </div>
 
@@ -70,12 +79,14 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
             {t.packagingCost}
           </label>
           <input
-            type="number"
-            value={expenses.packagingCost}
-            onChange={(e) => onExpensesChange({...expenses, packagingCost: Number(e.target.value)})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min="0"
-            placeholder={t.packagingCostPlaceholder}
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={expenses.packagingCost === 0 ? '' : expenses.packagingCost}
+            onChange={handleNumberInput('packagingCost')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
+            placeholder="0"
+            
           />
         </div>
 
@@ -84,14 +95,13 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
             {t.returnsRate}
           </label>
           <input
-            type="number"
-            value={expenses.returnsRate}
-            onChange={(e) => onExpensesChange({...expenses, returnsRate: Number(e.target.value)})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min="0"
-            max="100"
-            step="0.1"
-            placeholder={t.returnsRatePlaceholder}
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={expenses.returnsRate === 0 ? '' : expenses.returnsRate}
+            onChange={handleNumberInput('returnsRate')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
+            placeholder="0"
           />
           <p className="text-xs text-gray-500 mt-1">{t.returnsRateHelp}</p>
         </div>
@@ -101,14 +111,13 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
             {t.targetProfitMargin}
           </label>
           <input
-            type="number"
-            value={expenses.targetProfitMargin}
-            onChange={(e) => onExpensesChange({...expenses, targetProfitMargin: Number(e.target.value)})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min="0"
-            max="100"
-            step="0.1"
-            placeholder={t.targetMarginPlaceholder}
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={expenses.targetProfitMargin === 0 ? '' : expenses.targetProfitMargin}
+            onChange={handleNumberInput('targetProfitMargin')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
+            placeholder="0"
           />
           <p className="text-xs text-gray-500 mt-1">{t.targetMarginHelp}</p>
         </div>
@@ -118,28 +127,26 @@ const BusinessExpensesForm: React.FC<BusinessExpensesFormProps> = ({
             VAT (%)
           </label>
           <input
-            type="number"
-            value={expenses.vatPercent ?? 7}
-            onChange={(e) => onExpensesChange({...expenses, vatPercent: Number(e.target.value)})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min="0"
-            max="100"
-            step="0.1"
-            placeholder="7"
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={expenses.vatPercent === 0 ? '' : expenses.vatPercent}
+            onChange={handleNumberInput('vatPercent')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
+            placeholder="0"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            ค่านายหน้าเพิ่มเติม (%)
+            {t.customCommission}
           </label>
           <input
-            type="number"
-            value={expenses.customCommissionPercent ?? 0}
-            onChange={(e) => onExpensesChange({...expenses, customCommissionPercent: Number(e.target.value)})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min="0"
-            max="100"
-            step="0.1"
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={expenses.customCommissionPercent === 0 ? '' : expenses.customCommissionPercent}
+            onChange={handleNumberInput('customCommissionPercent')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
             placeholder="0"
           />
         </div>
